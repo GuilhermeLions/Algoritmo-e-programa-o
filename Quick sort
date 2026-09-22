@@ -1,0 +1,60 @@
+import java.util.Random;
+public class Main {
+    private static int particao(int e, int d, int[] a) {
+
+        int pivo, aux;
+        int i, j;
+        pivo = a[d];
+        i = e - 1;
+        j = d;
+        do {
+
+            do {
+                i = i + 1;
+                //Procura o maior
+            } while ((a[i] < pivo) && (i < d));
+            do {
+                j = j - 1;
+                //Procura o menor
+            } while ((a[j] > pivo) && (j > 0));
+            //Aqui realiza a troca de valores
+            aux = a[i];
+            a[i] = a[j];
+            a[j] = aux;
+        } while (j > i);
+        // colocando o pivo a[d] em seu lugar
+        a[j] = a[i];
+        a[i] = a[d];
+        a[d] = aux;
+        return i;
+    }
+    public static void quickSort(int e, int d, int[] a) {
+        int i;
+        if (d > e) {
+            i = particao(e, d, a);
+            /* Particionando o vetor */
+            quickSort(e, i - 1, a);
+            quickSort(i + 1, d, a);
+        }
+    }
+    public static void main(String[] args) {
+        Random rd = new Random();
+        int[] vetor = new int[1000];
+        // Preenche o vetor de 1000 posições com números aleatórios entre 0 e 999
+        for (int i = 0; i < vetor.length; i++) {
+            vetor[i] = rd.nextInt(1000);
+        }
+        // Exibe os primeiros 20 elementos antes da ordenação
+        System.out.println("Primeiros 20 elementos (desordenados):");
+        for (int i = 0; i < vetor.length; i++) {
+            System.out.print(vetor[i] + " ");
+        }
+        // Ordena todo o vetor de 1000 posições
+        quickSort(0, vetor.length - 1, vetor);
+        // Exibe os primeiros 20 elementos após a ordenação
+        System.out.println("\n\nPrimeiros 20 elementos (ordenados):");
+        for (int i = 0; i < vetor.length; i++) {
+            System.out.print(vetor[i] + " ");
+        }
+    }
+}
